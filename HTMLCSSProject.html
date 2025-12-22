@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechCon2025 - Technology Conference</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --dark-color: #212529;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.95) !important;
+        }
+        
+        .navbar.scrolled {
+            background-color: white !important;
+            padding: 8px 0;
+        }
+        
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        /* Animation Classes */
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite ease-in-out;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .animate-slide-left {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+        
+        .animate-slide-right {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        
+        .hero-section {
+            background: linear-gradient(135deg, rgba(58, 134, 255, 0.9), rgba(131, 56, 236, 0.9)), 
+                        url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            color: white;
+            padding: 180px 0 120px;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .hero-content.animated {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        .countdown-box {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            margin-top: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .countdown-box.animated {
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+        }
+        
+        .countdown-item {
+            display: inline-block;
+            margin: 0 15px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .countdown-item.animated {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        
+        .countdown-item:nth-child(1) { animation-delay: 0.8s; }
+        .countdown-item:nth-child(2) { animation-delay: 0.9s; }
+        .countdown-item:nth-child(3) { animation-delay: 1.0s; }
+        .countdown-item:nth-child(4) { animation-delay: 1.1s; }
+        
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .section-title.animated {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .speaker-card {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .speaker-card.animated {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .speaker-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .speaker-img {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .speaker-card:hover .speaker-img {
+            transform: scale(1.05);
+        }
+        
+        .schedule-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .schedule-timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        
+        .timeline-item:nth-child(even) {
+            transform: translateX(20px);
+        }
+        
+        .timeline-item.animated {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: scale(1.02);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            top: 15px;
+            right: -10px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+        
+        .venue-section {
+            background-color: #f8f9fa;
+            padding: 100px 0;
+        }
+        
+        .venue-img {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .venue-img.animated {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+        
+        /* Registration Pricing Section */
+        .pricing-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+        }
+        
+        .pricing-container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            padding: 40px;
+            margin: 0 auto;
+        }
+        
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .pricing-header h2 {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .pricing-header p {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .brands-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .brand-item {
+            text-align: center;
+            padding: 15px 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .brand-item p {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .brand-item strong {
+            color: #c0c0c0;
+            font-size: 1.3rem;
+        }
+        
+        .pricing-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            flex: 1;
+            min-width: 250px;
+            max-width: 280px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .pricing-card.animated {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+        }
+        
+        .card-silver::before {
+            background: linear-gradient(90deg, #c0c0c0, #e8e8e8);
+        }
+        
+        .card-gold::before {
+            background: linear-gradient(90deg, #d4af37, #f7ef8a);
+        }
+        
+        .card-platinum::before {
+            background: linear-gradient(90deg, #e5e4e2, #f5f5f5);
+        }
+        
+        .card-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-header .tier {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .card-header .price {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #2c3e50;
+        }
+        
+        .card-header .price::before {
+            content: '$';
+            font-size: 1.8rem;
+            vertical-align: super;
+        }
+        
+        .card-header .duration {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+        
+        .remaining {
+            font-size: 0.9rem;
+            color: #e74c3c;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+        
+        .features {
+            list-style-type: none;
+            margin: 25px 0;
+            padding: 0;
+            flex-grow: 1;
+        }
+        
+        .features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .select-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: auto;
+            padding-top: 20px;
+        }
+        
+        .select-button {
+            display: block;
+            padding: 14px 25px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            width: 100%;
+            max-width: 180px;
+        }
+        
+        .select-button:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card-silver .select-button {
+            background: #c0c0c0;
+        }
+        
+        .card-silver .select-button:hover {
+            background: #a8a8a8;
+        }
+        
+        .card-gold .select-button {
+            background: #d4af37;
+        }
+        
+        .card-gold .select-button:hover {
+            background: #b8941f;
+        }
+        
+        .card-platinum .select-button {
+            background: #e5e4e2;
+            color: #333;
+        }
+        
+        .card-platinum .select-button:hover {
+            background: #d0cfcd;
+        }
+        
+        .join-now-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .join-now-button {
+            display: inline-block;
+            padding: 16px 50px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .join-now-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.6);
+            background: linear-gradient(135deg, #c0392b, #a53125);
+        }
+        
+        /* Sponsors Section */
+        .sponsors-section {
+            padding: 80px 0;
+            background-color: #fff;
+        }
+        
+        .sponsor-category {
+            margin-bottom: 50px;
+        }
+        
+        .sponsor-category-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #555;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+        }
+        
+        .sponsor-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 120px;
+            padding: 20px;
+            margin: 10px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .sponsor-logo-container.animated {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .sponsor-logo {
+            max-width: 100%;
+            max-height: 80px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .sponsor-logo-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .sponsor-logo-container:hover .sponsor-logo {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        
+        .sponsor-platinum .sponsor-logo-container {
+            border: 2px solid #e5e4e2;
+        }
+        
+        .sponsor-gold .sponsor-logo-container {
+            border: 2px solid #ffd700;
+        }
+        
+        .sponsor-silver .sponsor-logo-container {
+            border: 2px solid #c0c0c0;
+        }
+        
+        .sponsor-bronze .sponsor-logo-container {
+            border: 2px solid #cd7f32;
+        }
+        
+        .divider {
+            height: 2px;
+            background-color: #e9ecef;
+            margin: 40px 0;
+        }
+        
+        /* Past Events Section */
+        .past-events-section {
+            padding: 100px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .past-event-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .past-event-card.animated {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .past-event-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .past-event-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .past-event-card:hover .past-event-img {
+            transform: scale(1.05);
+        }
+        
+        .past-event-content {
+            padding: 30px;
+        }
+        
+        .past-event-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .past-event-divider {
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            margin: 20px 0;
+            width: 80px;
+        }
+        
+        .past-event-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .past-event-highlight {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .past-event-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn-watch, .btn-submit {
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-watch {
+            background-color: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-watch:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+        
+        .btn-submit {
+            background-color: transparent;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .btn-submit:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        /* Video Section */
+        .video-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+        
+        .video-container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            height: 100%;
+        }
+        
+        .video-card.animated {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .video-thumbnail:hover img {
+            transform: scale(1.1);
+        }
+        
+        .video-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .video-play-btn:hover {
+            background: white;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .video-content {
+            padding: 20px;
+        }
+        
+        .video-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .video-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        
+        .register-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 100px 0;
+        }
+        
+        .btn-register {
+            background-color: white;
+            color: var(--primary-color);
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 70px 0 20px;
+        }
+        
+        .social-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* Floating Animation Element */
+        .floating-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        
+        /* Loading Animation */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .spinner {
+            width: 70px;
+            height: 70px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Scroll Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 999;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* Modal for Video */
+        .video-modal .modal-content {
+            background: transparent;
+            border: none;
+        }
+        
+        .video-modal .modal-body {
+            padding: 0;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+        }
+        
+        .video-modal iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .schedule-timeline::before {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 21px;
+            }
+            
+            .timeline-item:nth-child(even)::after {
+                left: 21px;
+            }
+            
+            .sponsor-logo-container {
+                height: 100px;
+                padding: 15px;
+            }
+            
+            .sponsor-logo {
+                max-height: 70px;
+            }
+            
+            .hero-section {
+                padding: 150px 0 80px;
+                min-height: auto;
+            }
+            
+            .past-event-buttons {
+                flex-direction: column;
+            }
+            
+            .pricing-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .pricing-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .brands-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .countdown-value {
+                font-size: 2rem;
+            }
+            
+            .countdown-item {
+                margin: 0 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home">TechCon<span style="color: var(--primary-color);">2025</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#speakers">Speakers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#schedule">Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#venue">Venue</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sponsors">Sponsors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#videos">Videos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#past-events">Past Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-register ms-2" href="#register">Register Now</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <!-- Floating Elements -->
+        <div class="floating-element animate-float" style="top: 20%; left: 10%; width: 80px; height: 80px;"></div>
+        <div class="floating-element animate-float delay-2" style="top: 60%; right: 15%; width: 60px; height: 60px;"></div>
+        <div class="floating-element animate-float delay-3" style="bottom: 20%; left: 20%; width: 100px; height: 100px;"></div>
+        
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12 hero-content text-center" id="heroContent">
+                    <h1 class="display-4 fw-bold mb-4">TechCon 2025</h1>
+                    <p class="lead mb-4">The Premier Technology Conference for Innovators, Developers, and Visionaries</p>
+                    <p class="mb-5"><i class="fas fa-calendar-alt me-2"></i> December 07-12, 2025 | <i class="fas fa-map-marker-alt me-2"></i> San Francisco, CA</p>
+                    
+                    <div class="countdown-box" id="countdownBox">
+                        <h4 class="mb-3">Conference Starts In:</h4>
+                        <div class="countdown">
+                            <div class="countdown-item" id="days">
+                                <span class="countdown-value">45</span>
+                                <span class="countdown-label">Days</span>
+                            </div>
+                            <div class="countdown-item" id="hours">
+                                <span class="countdown-value">12</span>
+                                <span class="countdown-label">Hours</span>
+                            </div>
+                            <div class="countdown-item" id="minutes">
+                                <span class="countdown-value">30</span>
+                                <span class="countdown-label">Minutes</span>
+                            </div>
+                            <div class="countdown-item" id="seconds">
+                                <span class="countdown-value">00</span>
+                                <span class="countdown-label">Seconds</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-5">
+                        <a href="#register" class="btn btn-light btn-lg px-5 py-3 animate-pulse">
+                            <i class="fas fa-ticket-alt me-2"></i> Get Your Ticket Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Speakers Section -->
+    <section id="speakers" class="py-5">
+        <div class="container">
+            <h2 class="section-title" id="speakersTitle">Featured Speakers</h2>
+            <div class="row">
+                <!-- Speaker 1 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card speaker-card" id="speaker1">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="card-img-top speaker-img" alt="Alex Johnson">
+                        <div class="card-body">
+                            <h5 class="card-title">Alex Johnson</h5>
+                            <p class="card-text text-muted">CEO, TechVision Inc.</p>
+                            <p class="card-text">Leading expert in AI and machine learning applications.</p>
+                            <div class="social-links">
+                                <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-primary"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Speaker 2 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card speaker-card" id="speaker2">
+                        <img src="https://www.simon-kucher.com/sites/default/files/content-type-person-profile/2024-12/8795_sarah_williams_4390.jpg" class="card-img-top speaker-img" alt="Sarah Williams">
+                        <div class="card-body">
+                            <h5 class="card-title">Sarah Williams</h5>
+                            <p class="card-text text-muted">CTO, FutureTech Labs</p>
+                            <p class="card-text">Pioneer in blockchain technology and decentralized systems.</p>
+                            <div class="social-links">
+                                <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-primary"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Speaker 3 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card speaker-card" id="speaker3">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="card-img-top speaker-img" alt="Michael Chen">
+                        <div class="card-body">
+                            <h5 class="card-title">Michael Chen</h5>
+                            <p class="card-text text-muted">Lead Developer, CodeCraft</p>
+                            <p class="card-text">Expert in cloud computing and distributed systems architecture.</p>
+                            <div class="social-links">
+                                <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-primary"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Speaker 4 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card speaker-card" id="speaker4">
+                        <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="card-img-top speaker-img" alt="Jessica Martinez">
+                        <div class="card-body">
+                            <h5 class="card-title">Jessica Martinez</h5>
+                            <p class="card-text text-muted">Head of UX, DesignHub</p>
+                            <p class="card-text">Specialist in user experience design and human-computer interaction.</p>
+                            <div class="social-links">
+                                <a href="#" class="text-primary me-2"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-primary me-2"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-primary"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title" id="scheduleTitle">Conference Schedule</h2>
+            <div class="schedule-timeline">
+                <!-- Day 1 -->
+                <div class="timeline-item" id="timeline1">
+                    <div class="timeline-content">
+                        <h5>Day 1: December 15, 2025</h5>
+                        <div class="mb-3">
+                            <strong>9:00 AM - 10:00 AM</strong>
+                            <p>Registration & Welcome Coffee</p>
+                        </div>
+                        <div class="mb-3">
+                            <strong>10:00 AM - 11:30 AM</strong>
+                            <p>Opening Keynote: The Future of Technology</p>
+                            <small class="text-muted">Alex Johnson</small>
+                        </div>
+                        <div class="mb-3">
+                            <strong>1:00 PM - 2:30 PM</strong>
+                            <p>Workshop: Building Scalable Applications</p>
+                            <small class="text-muted">Michael Chen</small>
+                        </div>
+                        <div>
+                            <strong>3:00 PM - 4:30 PM</strong>
+                            <p>Panel Discussion: AI Ethics</p>
+                            <small class="text-muted">Multiple Speakers</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Day 2 -->
+                <div class="timeline-item" id="timeline2">
+                    <div class="timeline-content">
+                        <h5>Day 2: December 16, 2025</h5>
+                        <div class="mb-3">
+                            <strong>9:30 AM - 11:00 AM</strong>
+                            <p>Blockchain Revolution</p>
+                            <small class="text-muted">Sarah Williams</small>
+                        </div>
+                        <div class="mb-3">
+                            <strong>11:30 AM - 1:00 PM</strong>
+                            <p>UX Design in the Age of AI</p>
+                            <small class="text-muted">Jessica Martinez</small>
+                        </div>
+                        <div>
+                            <strong>2:30 PM - 4:00 PM</strong>
+                            <p>Hands-on: Cloud Deployment Strategies</p>
+                            <small class="text-muted">Michael Chen</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Day 3 -->
+                <div class="timeline-item" id="timeline3">
+                    <div class="timeline-content">
+                        <h5>Day 3: December 17, 2025</h5>
+                        <div class="mb-3">
+                            <strong>10:00 AM - 11:30 AM</strong>
+                            <p>Future Tech Trends</p>
+                            <small class="text-muted">Panel Discussion</small>
+                        </div>
+                        <div class="mb-3">
+                            <strong>1:00 PM - 2:30 PM</strong>
+                            <p>Networking Session</p>
+                        </div>
+                        <div>
+                            <strong>3:00 PM - 4:30 PM</strong>
+                            <p>Closing Ceremony & Awards</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Venue Section -->
+    <section id="venue" class="venue-section">
+        <div class="container">
+            <h2 class="section-title" id="venueTitle">Conference Venue</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Conference Center" class="img-fluid venue-img" id="venueImg">
+                </div>
+                <div class="col-lg-6">
+                    <h3>San Francisco Conference Center</h3>
+                    <p class="lead">A state-of-the-art facility in the heart of downtown San Francisco.</p>
+                    <p>The venue offers cutting-edge technology, comfortable seating, and excellent amenities to ensure a productive and enjoyable conference experience.</p>
+                    <div class="mt-4">
+                        <p><i class="fas fa-map-marker-alt text-primary me-2"></i> 123 Tech Street, San Francisco, CA 94105</p>
+                        <p><i class="fas fa-phone text-primary me-2"></i> +1 (555) 123-4567</p>
+                        <p><i class="fas fa-envelope text-primary me-2"></i> info@sfconferencecenter.com</p>
+                    </div>
+                    <a href="#" class="btn btn-primary mt-3 animate-pulse">View on Map</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Pricing Section -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <div class="pricing-container">
+                <div class="pricing-header">
+                    <h2>Registration Pricing</h2>
+                    <p>Choose the perfect plan for your conference experience</p>
+                </div>
+                
+                <div class="brands-info">
+                    <div class="brand-item">
+                        <p>75 Remaining</p>
+                        <strong>Silver</strong>
+                        <p>250 Remaining</p>
+                    </div>
+                </div>
+                
+                <div class="pricing-cards">
+                    <!-- Silver Tier 1 -->
+                    <div class="pricing-card card-silver" id="pricingCard1">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="price">50</div>
+                                <div class="duration">Single Day for 1 Person</div>
+                            </div>
+                            <ul class="features">
+                                <li>Access to all sessions</li>
+                                <li>Conference materials</li>
+                                <li>Networking reception</li>
+                                <li>Lunch and coffee breaks</li>
+                                <li>Digital certificate</li>
+                            </ul>
+                            <div class="select-button-container">
+                                <a href="#" class="select-button">SELECT</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Silver Tier 2 -->
+                    <div class="pricing-card card-silver" id="pricingCard2">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="price">89</div>
+                                <div class="duration">Every Day for 1 Person</div>
+                            </div>
+                            <ul class="features">
+                                <li>All Silver benefits</li>
+                                <li>Access to workshops</li>
+                                <li>Speaker dinner access</li>
+                                <li>Priority seating</li>
+                                <li>Conference swag bag</li>
+                            </ul>
+                            <div class="select-button-container">
+                                <a href="#" class="select-button">SELECT</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gold Tier -->
+                    <div class="pricing-card card-gold" id="pricingCard3">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="tier">Gold</div>
+                                <div class="remaining">68 Remaining</div>
+                                <div class="price">179</div>
+                                <div class="duration">Every Day for 1 Person</div>
+                            </div>
+                            <ul class="features">
+                                <li>All Silver benefits</li>
+                                <li>VIP lounge access</li>
+                                <li>One-on-one with speakers</li>
+                                <li>Premium swag bag</li>
+                                <li>Early bird special</li>
+                            </ul>
+                            <div class="select-button-container">
+                                <a href="#" class="select-button">SELECT</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Platinum Tier -->
+                    <div class="pricing-card card-platinum" id="pricingCard4">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="tier">Platinum</div>
+                                <div class="remaining">20 Remaining</div>
+                                <div class="price">450</div>
+                                <div class="duration">Every Day for 1 Person</div>
+                            </div>
+                            <ul class="features">
+                                <li>All Gold benefits</li>
+                                <li>Backstage access</li>
+                                <li>Private speaker sessions</li>
+                                <li>Luxury gift package</li>
+                                <li>Lifetime membership</li>
+                            </ul>
+                            <div class="select-button-container">
+                                <a href="#" class="select-button">SELECT</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="join-now-container">
+                    <a href="#" class="join-now-button animate-pulse">JOIN NOW!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsors Section -->
+    <section id="sponsors" class="sponsors-section">
+        <div class="container">
+            <h2 class="section-title" id="sponsorsTitle">Our Sponsors</h2>
+            
+            <!-- Platinum Sponsors -->
+            <div class="sponsor-category sponsor-platinum">
+                <h3 class="sponsor-category-title">Platinum Sponsors</h3>
+                <div class="row justify-content-center">
+                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor1">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor2">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor3">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" class="sponsor-logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Divider -->
+            <div class="divider"></div>
+            
+            <!-- Gold Sponsors -->
+            <div class="sponsor-category sponsor-gold">
+                <h3 class="sponsor-category-title">Gold Sponsors</h3>
+                <div class="row justify-content-center">
+                    <div class="col-6 col-md-4 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor5">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor6">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/01/LinkedIn_Logo.svg" alt="LinkedIn" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor7">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Tesla_logo.png" alt="Tesla" class="sponsor-logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Divider -->
+            <div class="divider"></div>
+            
+            <!-- Silver Sponsors -->
+            <div class="sponsor-category sponsor-silver">
+                <h3 class="sponsor-category-title">Silver Sponsors</h3>
+                <div class="row justify-content-center">
+                    <div class="col-6 col-md-3 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor8">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Dropbox_Icon.svg" alt="Dropbox" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor9">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg" alt="Airbnb" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor10">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor11">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" class="sponsor-logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Divider -->
+            <div class="divider"></div>
+            
+            <!-- Bronze Sponsors -->
+            <div class="sponsor-category sponsor-bronze">
+                <h3 class="sponsor-category-title">Bronze Sponsors</h3>
+                <div class="row justify-content-center">
+                    <div class="col-6 col-md-3 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor12">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor13">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Dell_Logo.svg" alt="Dell" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor14">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg" alt="HP" class="sponsor-logo">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2 mb-4">
+                        <div class="sponsor-logo-container" id="sponsor15">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Slack_icon_2019.svg" alt="Slack" class="sponsor-logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="videos" class="video-section">
+        <div class="container video-container">
+            <h2 class="section-title text-white" id="videoTitle" style="color: white !important;">Conference Videos</h2>
+            <p class="text-center text-white mb-5 lead">Watch highlights from previous TechCon events</p>
+            
+            <div class="row">
+                <!-- Video 1 -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="video-card" id="videoCard1">
+                        <div class="video-thumbnail" data-bs-toggle="modal" data-bs-target="#videoModal" data-video-id="dQw4w9WgXcQ">
+                            <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="TechCon 2023 Highlights">
+                            <div class="video-play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-content">
+                            <h5 class="video-title">TechCon 2023 Highlights</h5>
+                            <p class="video-description">Watch the best moments from our 2023 conference featuring groundbreaking talks and demos.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted"><i class="far fa-clock me-1"></i> 5:24</span>
+                                <span class="text-muted"><i class="far fa-eye me-1"></i> 25K views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 2 -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="video-card" id="videoCard2">
+                        <div class="video-thumbnail" data-bs-toggle="modal" data-bs-target="#videoModal" data-video-id="9bZkp7q19f0">
+                            <img src="https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg" alt="Keynote: Future of AI">
+                            <div class="video-play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-content">
+                            <h5 class="video-title">Future of AI - Keynote 2023</h5>
+                            <p class="video-description">Dr. Sarah Williams discusses the revolutionary impact of AI on technology and society.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted"><i class="far fa-clock me-1"></i> 42:18</span>
+                                <span class="text-muted"><i class="far fa-eye me-1"></i> 18K views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 3 -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="video-card" id="videoCard3">
+                        <div class="video-thumbnail" data-bs-toggle="modal" data-bs-target="#videoModal" data-video-id="JGwWNGJdvx8">
+                            <img src="https://img.youtube.com/vi/JGwWNGJdvx8/maxresdefault.jpg" alt="Tech Innovation Panel">
+                            <div class="video-play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="video-content">
+                            <h5 class="video-title">Tech Innovation Panel Discussion</h5>
+                            <p class="video-description">Industry leaders debate the most promising technologies of the coming decade.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted"><i class="far fa-clock me-1"></i> 38:45</span>
+                                <span class="text-muted"><i class="far fa-eye me-1"></i> 32K views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-light btn-lg px-4">
+                    <i class="fab fa-youtube me-2"></i> View More Videos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Past Events Section -->
+    <section id="past-events" class="past-events-section">
+        <div class="container">
+            <h2 class="section-title" id="pastEventsTitle">Past Events</h2>
+            
+            <div class="row">
+                <!-- Past Event 1 -->
+                <div class="col-lg-6 mb-5">
+                    <div class="past-event-card" id="pastEvent1">
+                        <img src="https://images.unsplash.com/photo-1535223289827-42f1e9919769?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="TechCon 2022" class="past-event-img">
+                        <div class="past-event-content">
+                            <h3 class="past-event-title">TechCon 2022</h3>
+                            <div class="past-event-divider"></div>
+                            <h4 class="past-event-subtitle">Getting ready</h4>
+                            <p class="past-event-highlight">BUT IT GETS BETTER</p>
+                            <div class="past-event-buttons">
+                                <a href="#" class="btn btn-watch">Watch</a>
+                                <a href="#" class="btn btn-submit">Submit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Past Event 2 -->
+                <div class="col-lg-6 mb-5">
+                    <div class="past-event-card" id="pastEvent2">
+                        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="TechCon 2021" class="past-event-img">
+                        <div class="past-event-content">
+                            <h3 class="past-event-title">TechCon 2023</h3>
+                            <div class="past-event-divider"></div>
+                            <h4 class="past-event-subtitle">Innovation Unleashed</h4>
+                            <p class="past-event-highlight">BREAKING BOUNDARIES</p>
+                            <div class="past-event-buttons">
+                                <a href="#" class="btn btn-watch">Watch</a>
+                                <a href="#" class="btn btn-submit">Submit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Register Section -->
+    <section id="register" class="register-section text-center">
+        <div class="container">
+            <h2 class="mb-4">Register Now for TechCon 2025</h2>
+            <p class="lead mb-5">Don't miss this opportunity to connect with industry leaders and expand your knowledge.</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <form id="registrationForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="First Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="Last Name" required>
+                            </div>
+                            <div class="col-12">
+                                <input type="email" class="form-control" placeholder="Email Address" required>
+                            </div>
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="Company/Organization">
+                            </div>
+                            <div class="col-12">
+                                <select class="form-select">
+                                    <option selected>Select Ticket Type</option>
+                                    <option value="1">Standard Pass - $299</option>
+                                    <option value="2">VIP Pass - $499</option>
+                                    <option value="3">Student Pass - $149</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-register btn-lg w-100 animate-pulse">Register Now</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h4 class="mb-4">TechCon 2025</h4>
+                    <p>The premier technology conference bringing together innovators, developers, and visionaries from around the world.</p>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#speakers" class="text-white-50 text-decoration-none">Speakers</a></li>
+                        <li class="mb-2"><a href="#schedule" class="text-white-50 text-decoration-none">Schedule</a></li>
+                        <li class="mb-2"><a href="#venue" class="text-white-50 text-decoration-none">Venue</a></li>
+                        <li class="mb-2"><a href="#pricing" class="text-white-50 text-decoration-none">Pricing</a></li>
+                        <li class="mb-2"><a href="#sponsors" class="text-white-50 text-decoration-none">Sponsors</a></li>
+                        <li class="mb-2"><a href="#videos" class="text-white-50 text-decoration-none">Videos</a></li>
+                        <li class="mb-2"><a href="#past-events" class="text-white-50 text-decoration-none">Past Events</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4">Connect With Us</h5>
+                    <div class="mb-4">
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <p class="mb-0"><i class="fas fa-envelope me-2"></i> info@techcon2025.com</p>
+                    <p><i class="fas fa-phone me-2"></i> +1 (555) 987-6543</p>
+                </div>
+            </div>
+            <hr class="my-5 bg-light">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 TechCon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div class="modal fade video-modal" id="videoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div id="videoPlayer">
+                        <!-- YouTube iframe will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Initialize animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show loading spinner
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.style.display = 'flex';
+            
+            // Simulate loading time
+            setTimeout(() => {
+                loadingSpinner.style.display = 'none';
+                
+                // Animate hero content
+                const heroContent = document.getElementById('heroContent');
+                const countdownBox = document.getElementById('countdownBox');
+                const countdownItems = document.querySelectorAll('.countdown-item');
+                
+                heroContent.classList.add('animated');
+                countdownBox.classList.add('animated');
+                
+                countdownItems.forEach(item => {
+                    item.classList.add('animated');
+                });
+                
+                // Initial animation for all animated elements
+                const elementsToAnimate = [
+                    '#speakersTitle',
+                    '#speaker1', '#speaker2', '#speaker3', '#speaker4',
+                    '#scheduleTitle',
+                    '#timeline1', '#timeline2', '#timeline3',
+                    '#venueTitle', '#venueImg',
+                    '#pricingCard1', '#pricingCard2', '#pricingCard3', '#pricingCard4',
+                    '#sponsorsTitle',
+                    '#sponsor1', '#sponsor2', '#sponsor3', '#sponsor4', '#sponsor5',
+                    '#sponsor6', '#sponsor7', '#sponsor8', '#sponsor9', '#sponsor10',
+                    '#sponsor11', '#sponsor12', '#sponsor13', '#sponsor14', '#sponsor15',
+                    '#videoTitle',
+                    '#videoCard1', '#videoCard2', '#videoCard3',
+                    '#pastEventsTitle',
+                    '#pastEvent1', '#pastEvent2'
+                ];
+                
+                elementsToAnimate.forEach(selector => {
+                    const element = document.querySelector(selector);
+                    if (element) {
+                        element.classList.add('animated');
+                    }
+                });
+                
+            }, 1000);
+        });
+
+        // Scroll animations
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.section-title, .speaker-card, .timeline-item, .venue-img, .pricing-card, .sponsor-logo-container, .video-card, .past-event-card');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('animated');
+                }
+            });
+            
+            // Update progress bar
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+            
+            // Show/hide back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (winScroll > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+            
+            // Navbar scroll effect
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        // Live countdown timer
+        function updateCountdown() {
+            const conferenceDate = new Date('December 7, 2025 09:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = conferenceDate - now;
+            
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').querySelector('.countdown-value').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').querySelector('.countdown-value').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').querySelector('.countdown-value').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').querySelector('.countdown-value').textContent = seconds.toString().padStart(2, '0');
+            } else {
+                // Conference has started
+                document.querySelector('.countdown').innerHTML = '<h4 class="text-white">Conference is Live Now!</h4>';
+            }
+        }
+
+        // Video Modal functionality
+        const videoModal = document.getElementById('videoModal');
+        if (videoModal) {
+            videoModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const videoId = button.getAttribute('data-video-id');
+                const videoPlayer = document.getElementById('videoPlayer');
+                
+                videoPlayer.innerHTML = `
+                    <iframe 
+                        src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" 
+                        title="YouTube video player" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                `;
+            });
+            
+            videoModal.addEventListener('hidden.bs.modal', function() {
+                const videoPlayer = document.getElementById('videoPlayer');
+                videoPlayer.innerHTML = '';
+            });
+        }
+
+        // Back to top functionality
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Show loading animation
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Processing...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check me-2"></i> Registration Successful!';
+                submitBtn.classList.remove('btn-register');
+                submitBtn.classList.add('btn-success');
+                
+                // Reset form
+                setTimeout(() => {
+                    this.reset();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('btn-success');
+                    submitBtn.classList.add('btn-register');
+                    
+                    // Show success message
+                    alert('Thank you for registering for TechCon 2025! You will receive a confirmation email shortly.');
+                }, 2000);
+            }, 2000);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+        
+        // Start countdown timer
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Add hover effects for buttons
+        document.querySelectorAll('.btn, .select-button, .join-now-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add typing animation effect to hero text
+        const heroTitle = document.querySelector('.hero-section h1');
+        if (heroTitle) {
+            const text = heroTitle.textContent;
+            heroTitle.textContent = '';
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    heroTitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            
+            // Start typing animation after page loads
+            setTimeout(typeWriter, 1500);
+        }
+    </script>
+</body>
+</html>
